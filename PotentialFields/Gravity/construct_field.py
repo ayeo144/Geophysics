@@ -7,7 +7,8 @@ class MassObject(object):
 	"""
 	def __init__(self, mass):
 		"""
-		
+		Inputs:
+			mass (float or int): mass of point object.
 		"""
 		self.mass = mass
 		
