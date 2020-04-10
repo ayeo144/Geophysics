@@ -33,18 +33,48 @@ class Field1D(object):
 	added at any positions and depths along the length of the survey line.
 	"""
 	def __init__(self, xmin, xmax, deltax):
+		"""
+		Define a gravitational field in space, with the field strength
+		initially being the background field strength.
+		
+		Inputs:
+			xmin (float or int): starting position.
+			
+			xmax (float or int): finishing position.
+			
+			deltax (float or int): increment size.
+		"""
 		self.xmin = xmin
 		self.xmax = xmax
 		self.x = np.arange(xmin, xmax+deltax, deltax)
 		self.grav_field = self.background()
 		
-	def background(self, amplitude=9.8, noise=False):
-		if noise == False:
-			return amplitude*np.ones(len(self.x))
-		elif noise == True:
-			return amplitude*np.ones(len(self.x)) + np.random.rand(len(self.x))
+	def background(self, amplitude=9.8):
+		"""
+		Create the background field of amplitude
+		9.8 m/s/s.
 		
+		Inputs:
+			amplitude (float or int): field strength.
+			
+		Returns:
+			background field (numpy array): background field strength of 
+				length x.
+		"""
+		return amplitude*np.ones(len(self.x))
+
 	def add_point_anomaly(self, xpos, depth, mass):
+		"""
+		Add a point mass object on the survey line and update the
+		gravitational field strength.
+		
+		Inputs:
+			xpos (float or int): postion along x-axis to place mass.
+			
+			depth (float or int): the depth the object is placed at.
+			
+			mass (float or int): the mass of the object.
+		"""
 		x = self.x
 		obj = MassObject(mass)
 		grav_potent = np.zeros(len(x))
